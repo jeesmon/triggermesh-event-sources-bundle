@@ -28,8 +28,9 @@ help: ## Display this help
 
 release: ## Publish container images and generate release manifests
 	@mkdir -p $(DIST_DIR)
-	$(KO) resolve -f config/ -l 'triggermesh.io/crd-install' > $(DIST_DIR)/triggermesh-crds.yaml
-	$(KO) resolve $(KOFLAGS) -t $(IMAGE_TAG) --tag-only -f config/ -l '!triggermesh.io/crd-install' > $(DIST_DIR)/triggermesh.yaml
+	$(KO) resolve -f config/ -l 'triggermesh.io/crd-install' --sbom=none > $(DIST_DIR)/triggermesh-crds.yaml
+	$(KO) resolve $(KOFLAGS) -t $(IMAGE_TAG) --tag-only -f config/ -l '!triggermesh.io/crd-install,!triggermesh.io/kustomization' --sbom=none > $(DIST_DIR)/triggermesh.yaml
+	@cp config/kustomization.yaml $(DIST_DIR)/kustomization.yaml
 
 clean: ## Clean release artifacts
 	@$(RM) -rfv $(DIST_DIR)

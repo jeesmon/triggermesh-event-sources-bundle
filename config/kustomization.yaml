@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  labels:
+    triggermesh.io/kustomization: 'true'
+namespace: s3-events
+resources:
+- ./triggermesh-crds.yaml
+- ./triggermesh.yaml
